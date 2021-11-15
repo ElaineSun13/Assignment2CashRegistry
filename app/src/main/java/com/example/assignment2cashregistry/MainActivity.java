@@ -2,6 +2,7 @@ package com.example.assignment2cashregistry;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +10,10 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.IOException;
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -112,27 +116,70 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     void updateTotal() {
+
         String amount = quantityView.getText().toString().trim();
-        if (amount.isEmpty() || selectedItem == null) {
-            totalPriceView.setText("Total");
-        } else {
-            totalPriceView.setText(itemTobuy.getTotal() + "");
+
+//            String.format("%.2f", itemTobuy.getTotal());
+//                    //+ "");
+
+
+
+            if (!amount.isEmpty()&& selectedItem !=null) {
+                totalPriceView.setText(itemTobuy.getTotal() + "");;
+
         }
+            else{
+                totalPriceView.setText("Total");
+
+            }
+
+
+
 
     }
 
     @Override
     public void onClick(View v) {
+        String amount = quantityView.getText().toString().trim();
         if (v == buttonBuy) {
-            selectedItem.buy(itemTobuy.quantity);
-            totalPriceView.setText(itemTobuy.getTotal()+"");
+            try{
+                selectedItem.buy(itemTobuy.quantity);
+                totalPriceView.setText(itemTobuy.getTotal()+"");
+                itemCustomAdapter.notifyDataSetChanged();//to update listview
 
-            itemCustomAdapter.notifyDataSetChanged();//to update listview
-        } else if (v == buttonClear) {
+            }
+            catch(IllegalArgumentException e) {
+                Context context = getApplicationContext();
+                String text=e.getMessage();
+                int duration = Toast.LENGTH_LONG;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+            }
+            catch(Exception e){
+                Context context = getApplicationContext();
+                String text= "All fields are required!!";
+                int duration = Toast.LENGTH_LONG;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+
+
+            }
+
+        }
+
+        else if (v == buttonClear) {
             quantityView.setText("");
             productItemView.setText("");
             totalPriceView.setText("");
-        } else {
+            itemTobuy.quantity=0;
+            itemTobuy.productName=null;
+            selectedItem = null;
+
+
+        } else
+            {
             Button b = (Button) v;
             String buttonText = b.getText().toString().trim();
 
@@ -143,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             itemTobuy.quantity = Integer.parseInt(new_result);
             totalPriceView.setText("");
             productItemView.setText("");
-            updateTotal();
+            //updateTotal();
         }
 
     }
