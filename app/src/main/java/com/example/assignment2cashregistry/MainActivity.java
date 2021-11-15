@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
             if (!amount.isEmpty()&& selectedItem !=null) {
-                totalPriceView.setText(itemTobuy.getTotal() + "");;
+                totalPriceView.setText(String.format("%.2f",itemTobuy.getTotal()));;
 
         }
             else{
@@ -144,7 +144,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (v == buttonBuy) {
             try{
                 selectedItem.buy(itemTobuy.quantity);
-                totalPriceView.setText(itemTobuy.getTotal()+"");
+                totalPriceView.setText(String.format("%.2f",itemTobuy.getTotal()));
+                Context context = getApplicationContext();
+                String text="Thank you for your purchase! Your purchase is "
+                        +itemTobuy.getQuantity()+" pants for "+
+                        String.format("%.2f", itemTobuy.getTotal())+".";
+                int duration = Toast.LENGTH_LONG;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+
                 itemCustomAdapter.notifyDataSetChanged();//to update listview
 
             }
