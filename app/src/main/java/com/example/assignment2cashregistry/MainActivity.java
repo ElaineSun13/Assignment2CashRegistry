@@ -66,12 +66,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         quantityView.setText("");
         itemCustomAdapter = new StoreItemCustomAdapter(this);
 
-//        listProductItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//            }
-//        });
+        listProductItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
 
         listProductItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 itemTobuy.price = selectedItem.getPrice();
                 productItemView.setText(selectedItem.getProductName() + "");
                 totalPriceView.setText("");
-               // updateTotal();
+                updateTotal();
             }
         });
 
@@ -111,15 +111,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-//    void updateTotal() {
-//        String amount = quantityView.getText().toString().trim();
-//        if (amount.isEmpty() || selectedItem == null) {
-//            totalPriceView.setText("Total");
-//        } else {
-//            totalPriceView.setText(itemTobuy.getTotal() + "");
-//        }
-//
-//    }
+    void updateTotal() {
+        String amount = quantityView.getText().toString().trim();
+        if (amount.isEmpty() || selectedItem == null) {
+            totalPriceView.setText("Total");
+        } else {
+            totalPriceView.setText(itemTobuy.getTotal() + "");
+        }
+
+    }
 
     @Override
     public void onClick(View v) {
@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             itemTobuy.quantity = Integer.parseInt(new_result);
             totalPriceView.setText("");
             productItemView.setText("");
-            //updateTotal();
+            updateTotal();
         }
 
     }
