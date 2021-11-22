@@ -9,12 +9,28 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:weightSum="3"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp">
         <TextView
             android:id="@+id/productType"
             android:layout_marginBottom="20dp"
             android:text="Product Type"
             android:textSize="25dp"
             android:gravity="center"/>
+
+            <Button
+                android:id="@+id/btnManager"
+                android:layout_weight="0.333"
+                android:text="MANAGER"
+                android:onClick="manage_task"
+                />
+        </TableRow>
+
         <TextView
             android:id="@+id/totalPrice"
             android:layout_marginBottom="60dp"
@@ -107,14 +123,21 @@
 
                     <Button
                         android:id="@+id/btnClear"
-                        android:layout_weight="0.666"
+                        android:layout_weight="0.333"
+
                         android:text="C"
                         />
+
                     <Button
                         android:id="@+id/btnZero"
-
-
+                        android:layout_weight="0.333"
                         android:text="0"/>
+                    <Button
+                        android:id="@+id/btnHide"
+                        android:layout_weight="0.333"
+                        android:visibility="invisible"
+
+                        android:text="9"/>
 
 
                 </TableRow>
@@ -159,6 +182,7 @@
 
         <ListView
             android:id="@+id/product_list"
+            android:paddingLeft="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

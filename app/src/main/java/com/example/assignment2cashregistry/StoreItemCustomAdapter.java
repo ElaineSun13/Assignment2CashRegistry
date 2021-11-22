@@ -17,16 +17,16 @@ public class StoreItemCustomAdapter extends BaseAdapter {
     //Context list_activity_context;
     private Activity context;
 
-    public StoreItemCustomAdapter(Activity context){
+    public StoreItemCustomAdapter(Activity context, ArrayList<StoreItem> storeItems){
         this.context=context;
-        listOfStoreItems=new ArrayList<StoreItem>();
+        listOfStoreItems=storeItems;
 
         //listOfStoreItems = list;
       // list_activity_context=activity_context;
     }
-    public void add(StoreItem item){
-        listOfStoreItems.add(item);
-    }
+//    public void add(StoreItem item){
+//        listOfStoreItems.add(item);
+//    }
 
     @Override
     public int getCount() {

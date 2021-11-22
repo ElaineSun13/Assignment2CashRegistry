@@ -42,9 +42,17 @@ public class StoreItem implements Parcelable {
         if(amount<=0) {
             throw new IllegalArgumentException("The amount must be larger than zero");
         } else if (amount > quantity) {
-            throw new IllegalArgumentException("No enough quentity in the stock!!");
+            throw new IllegalArgumentException("No enough quantity in the stock!!");
         }
         quantity -= amount;
+    }
+
+    public void restock(int amount) {
+        if(amount<=0) {
+            throw new IllegalArgumentException("The amount must be larger than zero");
+        }
+
+        quantity += amount;
     }
 
     public void setQuantity(int quantity) {

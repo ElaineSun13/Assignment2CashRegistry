@@ -1,8 +1,14 @@
 package com.example.assignment2cashregistry;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,8 +23,6 @@ import java.security.InvalidParameterException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    ListView product_List;static StoreItemManager storeItemManager = new StoreItemManager();
-
 
     Button button1;
     Button button2;
@@ -31,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button button9;
     Button button0;
     Button buttonClear;
+    Button buttonManager;
     ListView listProductItems;
 
 
@@ -45,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ArrayList<StoreItem> storeItemLists = new ArrayList<>(0);
     StoreItemCustomAdapter itemCustomAdapter;
     //ArrayList<StoreItem> storeItemLists;
+
+    ActivityResultLauncher<Intent> newStockActivityResultLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,19 +70,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button0 = findViewById(R.id.btnZero);
         buttonBuy = findViewById(R.id.btnBuy);
         buttonClear = findViewById(R.id.btnClear);
+        buttonManager = findViewById(R.id.btnManager);
+
         productItemView = findViewById(R.id.productType);
         totalPriceView = findViewById(R.id.totalPrice);
         quantityView = findViewById(R.id.textQuantity);
         listProductItems = findViewById(R.id.product_list);
         quantityView.setText("");
-        itemCustomAdapter = new StoreItemCustomAdapter(this);
-
-        listProductItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-        });
+        itemCustomAdapter = new StoreItemCustomAdapter(this, StoreItemManager.getStoreItems());
 
         listProductItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -89,13 +91,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        StoreItem pants = new StoreItem("Pants", 24.45, 20);
-        StoreItem shoes = new StoreItem("Shoes", 45.70, 100);
-        StoreItem hats = new StoreItem("Hats", 15.20, 40);
-
-        itemCustomAdapter.add(pants);
-        itemCustomAdapter.add(shoes);
-        itemCustomAdapter.add(hats);
+//        StoreItem pants = new StoreItem("Pants", 24.45, 20);
+//        StoreItem shoes = new StoreItem("Shoes", 45.70, 100);
+//        StoreItem hats = new StoreItem("Hats", 15.20, 40);
+//
+//        itemCustomAdapter.add(pants);
+//        itemCustomAdapter.add(shoes);
+//        itemCustomAdapter.add(hats);
 
         listProductItems.setAdapter(itemCustomAdapter);
 
@@ -112,16 +114,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonClear.setOnClickListener(this);
         buttonBuy.setOnClickListener(this);
 
+
+        newStockActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == Activity.RESULT_OK){
+//                            Intent data = result.getData();
+//                            ToDo newTodo = data.getParcelableExtra("newToDo");
+//
+//                            //   allTodos.add(newTodo);
+//                            adapter.notifyDataSetChanged();
+                        }
+                    }
+                }
+        );
     }
 
 
     void updateTotal() {
 
         String amount = quantityView.getText().toString().trim();
-
-//            String.format("%.2f", itemTobuy.getTotal());
-//                    //+ "");
-
 
 
             if (!amount.isEmpty()&& selectedItem !=null) {
@@ -144,6 +158,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (v == buttonBuy) {
             try{
                 selectedItem.buy(itemTobuy.quantity);
+                StoreItemManager.buy(itemTobuy);
                 totalPriceView.setText(String.format("%.2f",itemTobuy.getTotal()));
                 Context context = getApplicationContext();
                 String text="Thank you for your purchase! Your purchase is "
@@ -197,10 +212,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             quantityView.setText(new_result);
 
             itemTobuy.quantity = Integer.parseInt(new_result);
-            totalPriceView.setText("");
-            productItemView.setText("");
-            //updateTotal();
+//            totalPriceView.setText("");
+//            productItemView.setText("");
+            updateTotal();
         }
 
+    }
+
+    public void manage_task(View view) {
+        Intent intent = new Intent(this, ManagerActivity.class);
+        startActivity(intent);
+//        newStockActivityResultLauncher.launch(intent);
     }
 }

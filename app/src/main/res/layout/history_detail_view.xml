@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+   android:layout_marginLeft="35dp"
+
+   >
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+
+        >
+       <TableRow
+           >
+           <TextView
+               android:text="Product:"
+               android:textSize="15sp"
+               android:textColor="@color/purple_200"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+
+
+               />
+           <TextView
+               android:id="@+id/detail_name"
+               android:text="Pante"
+               android:textSize="15sp"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+
+
+               />
+
+       </TableRow>
+
+
+        <TableRow>
+            <TextView
+                android:text="Total Price:"
+                android:textSize="15sp"
+                android:textColor="@color/purple_200"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+            <TextView
+                android:id="@+id/detail_price"
+                android:text="204.4"
+                android:textSize="15sp"
+                  android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:text="Purshase Date:"
+                android:textSize="15sp"
+                android:textColor="@color/purple_200"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+            <TextView
+                android:id="@+id/detail_date"
+                android:text="Sat Oct 09 18:24"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                />
+        </TableRow>
+    </TableLayout>
+
+
+</LinearLayout>
